@@ -39,7 +39,7 @@ class App extends Component {
 
   showImage = () => {
     if(this.state.images.length > 0) {
-      return <img src={`/images/${this.state.images[this.state.currentImage].file}`} alt="hi" />
+      return <img src={`${this.state.images[this.state.currentImage].path}`} alt="hi" />
     } else {
       return <div>NO Images Loaded</div>
     }
