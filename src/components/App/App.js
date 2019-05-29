@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import SingleImage from '../SingleImage/SingleImage';
 import axios from 'axios';
 
 class App extends Component {
@@ -47,12 +48,7 @@ class App extends Component {
 
   showImage = () => {
     if(this.state.images.length > 0) {
-      return (
-        <>
-        <img src={`${this.state.images[this.state.currentImage].path}`} alt={`${this.state.images[this.state.currentImage].title}`} />
-        <h1>{this.state.images[this.state.currentImage].title}</h1>
-        </>
-      );
+      return <SingleImage imageData={this.state.images[this.state.currentImage]} />
     } else {
       return <div>NO Images Loaded</div>
     }
@@ -64,8 +60,10 @@ class App extends Component {
     return (
       <div className="App">
         
-        {/* {JSON.stringify(this.state.images)} */}
+        {JSON.stringify(this.state.images)}
+
         {this.showImage()}
+        
         <button onClick={this.goPrev}>Prevous</button>
         <button onClick={this.goNext}>Next</button>
       </div>
