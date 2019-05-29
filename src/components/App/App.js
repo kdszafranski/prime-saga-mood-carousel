@@ -35,11 +35,24 @@ class App extends Component {
 
   goNext = () => {
     console.log('next');
+    let next = this.state.currentImage + 1;
+    if(next >= this.state.images.length) {
+      next = 0;
+    }
+
+    this.setState({
+      currentImage: next,
+    });
   }
 
   showImage = () => {
     if(this.state.images.length > 0) {
-      return <img src={`${this.state.images[this.state.currentImage].path}`} alt="hi" />
+      return (
+        <>
+        <img src={`${this.state.images[this.state.currentImage].path}`} alt={`${this.state.images[this.state.currentImage].title}`} />
+        <h1>{this.state.images[this.state.currentImage].title}</h1>
+        </>
+      );
     } else {
       return <div>NO Images Loaded</div>
     }
