@@ -1,32 +1,25 @@
 import React, { Component } from 'react';
 import './App.css';
 import SingleImage from '../SingleImage/SingleImage';
+import { connect } from 'react-redux';
 import axios from 'axios';
 
 class App extends Component {
 
   state = {
-    images: [],
     currentImage: 0,
   }
 
   componentDidMount() {
-    axios.get('/api/images')
-      .then( (response) => {
-        this.setState({
-          images: response.data,
-        });
-      })
-      .catch( (error) => {
-        console.log(error);
-      });
+    // move to saga and reducer
+    this.props.dispatch({ type: 'GET_IMAGES' });
   }
 
   goPrev = () => {
     console.log('prev');
     let prev = this.state.currentImage - 1;
     if(prev < 0) {
-      prev = this.state.images.length - 1;
+      prev = this.props.reduxState.projects.length - 1;
     }
 
     this.setState({
@@ -37,7 +30,7 @@ class App extends Component {
   goNext = () => {
     console.log('next');
     let next = this.state.currentImage + 1;
-    if(next >= this.state.images.length) {
+    if(next >= this.props.reduxState.projects.length) {
       next = 0;
     }
 
@@ -47,8 +40,12 @@ class App extends Component {
   }
 
   showImage = () => {
-    if(this.state.images.length > 0) {
-      return <SingleImage imageData={this.state.images[this.state.currentImage]} />
+    if(this.props.reduxState.projects) {
+      if(this.props.reduxState.projects.length > 0) { 
+        return <SingleImage imageData={this.props.reduxState.projects[this.state.currentImage]} />
+      } else {
+        return <div>NO REDUX</div>
+      }
     } else {
       return <div>NO Images Loaded</div>
     }
@@ -60,7 +57,7 @@ class App extends Component {
     return (
       <div className="App">
         
-        {JSON.stringify(this.state.images)}
+        <div>Redux: {JSON.stringify(this.props.reduxState)} </div>
 
         {this.showImage()}
         
@@ -71,4 +68,8 @@ class App extends Component {
   }
 }
 
-export default App;
+const mapReduxStateToProps = (reduxState) => ({
+  reduxState,
+});
+
+export default connect(mapReduxStateToProps)(App);
