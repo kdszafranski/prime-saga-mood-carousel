@@ -23,6 +23,16 @@ import reducers from './redux/reducers';
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('GET_IMAGES', getImages);
+    yield takeEvery('GET_SINGLE_IMAGE_TAGS', getSingleImageTags)
+}
+
+function* getSingleImageTags(action, payload) {
+    console.log("in single image tags saga");
+    try {
+        const tags = yield axios.get(`/api/tags/${payload.imageId}`);
+    } catch {
+
+    }
 }
 
 // gets images from the server, stores in reducer

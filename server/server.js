@@ -9,6 +9,7 @@ app.use(express.static('build'));
 
 /** ---------- ROUTES ---------- **/
 app.use('/api/images', require('./routes/images.router'));
+app.use('/api/tags', require('./routes/tags.router'));
 
 
 /** ---------- START SERVER ---------- **/
