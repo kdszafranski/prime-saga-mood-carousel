@@ -26,21 +26,23 @@ function* rootSaga() {
     yield takeEvery('GET_SINGLE_IMAGE_TAGS', getSingleImageTags)
 }
 
-function* getSingleImageTags(action, payload) {
+// get all of the assigned tags for a single image/project
+function* getSingleImageTags(action) {
     console.log("in single image tags saga");
     try {
-        const tags = yield axios.get(`/api/tags/${payload.imageId}`);
+        const tags = yield axios.get(`/api/tags/${action.payload}`);
+        yield console.log('tags: ', tags);
+        yield put( {type: 'SET_IMAGE_TAGS', payload: tags.data });
     } catch {
-
+        console.log("error im single image tag saga");
     }
 }
 
 // gets images from the server, stores in reducer
-function* getImages(action, payload) {
+function* getImages(action) {
     console.log("in get images saga");
     try {
         const result = yield axios.get('/api/images');
-
         yield put({ type: 'SET_IMAGES', payload: result.data});
     } catch {
         console.log("Error in get images");

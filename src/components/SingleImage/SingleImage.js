@@ -1,29 +1,18 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import { connect } from 'react-redux';
 
 class SingleImage extends Component {
 
-    //   state = {
-    //     images: [],
-    //     currentImage: 0,
-    //   }
-
-    // componentDidMount() {
-    //     // axios.get('/api/images')
-    //     //   .then( (response) => {
-    //     //     this.setState({
-    //     //       images: response.data,
-    //     //     });
-    //     //   })
-    //     //   .catch( (error) => {
-    //     //     console.log(error);
-    //     //   });
-    // }
+    componentDidMount() {
+        console.log('singleimage mounted');
+        this.props.dispatch({ type: 'GET_SINGLE_IMAGE_TAGS', payload: this.props.imageData.id });
+    }
 
     // Renders the entire app on the DOM
     render() {
         return (
             <>
+                {JSON.stringify(this.props.imageData)}
                 <img src={`${this.props.imageData.path}`} alt={`${this.props.imageData.title}`} />
                 <h1>{this.props.imageData.title}</h1>
             </>
@@ -31,4 +20,8 @@ class SingleImage extends Component {
     }
 }
 
-export default SingleImage;
+const mapReduxStateToProps = (reduxState) => ({
+    reduxState,
+  });
+
+export default connect()(SingleImage);

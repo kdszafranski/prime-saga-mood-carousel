@@ -57,7 +57,7 @@ class App extends Component {
     return (
       <div className="App">
         
-        <div>Redux: {JSON.stringify(this.props.reduxState)} </div>
+        {/* <div>Redux: {JSON.stringify(this.props.reduxState)} </div> */}
 
         {this.showImage()}
         

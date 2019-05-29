@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
 
-const testing = (state = "hello", action) => {
-    if(action.type === 'TEST') {
-        return "Works!";
+const imageTags = (state = [], action) => {
+    if(action.type === 'SET_IMAGE_TAGS') {
+        return action.payload;
     }
-    
+
     return state;
 }
 
@@ -30,6 +30,6 @@ const tags = (state = [], action) => {
 
 export default combineReducers({
     projects: images,
-    testing,
+    imageTags,
     tags,
 });

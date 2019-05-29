@@ -3,8 +3,9 @@ const pool = require('../modules/pool');
 
 router.get('/:imageId', (req, res) => {
     console.log('GET tags for image: ', req.params.imageId);
-    
-    pool.query(
+
+    if(req.params.imageId != undefined) {
+        pool.query(
             `SELECT tags.name FROM images
             JOIN images_tags ON images.id = images_tags.image_id
             JOIN tags ON images_tags.tag_id = tags.id
@@ -17,8 +18,10 @@ router.get('/:imageId', (req, res) => {
             console.log(`error in get images: ${error}`);
             res.sendStatus(500);
         })
-
-    // res.send(['test', 'test2']);
+    } else {
+        res.send([]);
+    }
+    
 });
 
 
