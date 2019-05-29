@@ -2,22 +2,30 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App.js';
+import axios from 'axios';
 import registerServiceWorker from './registerServiceWorker';
+
+// Redux
 import { createStore, applyMiddleware } from 'redux';
-// Provider allows us to use redux within our react app
 import { Provider } from 'react-redux';
 import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
-import reducers from './redux/reducers';
 import { put, takeEvery } from '@redux-saga/core/effects';
-import axios from 'axios';
+
+// my reducers
+import reducers from './redux/reducers';
+
+
+
+/****** SAGAS ******/
 
 // Create the rootSaga generator function
 function* rootSaga() {
     yield takeEvery('GET_IMAGES', getImages);
 }
 
+// gets images from the server, stores in reducer
 function* getImages(action, payload) {
     console.log("in get images saga");
     try {
@@ -28,6 +36,9 @@ function* getImages(action, payload) {
         console.log("Error in get images");
     }
 }
+
+
+
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
